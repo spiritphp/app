@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php
+require_once 'vendor/autoload.php';
+putenv("APP_ENV=console");
+Spirit\Engine::run(realpath(__DIR__) . '/');
