@@ -12,6 +12,10 @@ $cfg->connections['pgsql']['database'] = env('PGSQL_DATABASE');
 $cfg->connections['pgsql']['user'] = env('PGSQL_USER');
 $cfg->connections['pgsql']['password'] = env('PGSQL_PASSWORD');
 
+$cfg->plugins = [
+    App\Plugins\RoutePlugin::class
+];
+
 $constructor->add(function() {
     return Components\HtmlHead::make()
         ->title('Title Page')
