@@ -28,7 +28,8 @@ class RoutePlugin extends Plugin {
         });
 
         $routing->group([
-            'prefix' => 'auth'
+            'prefix' => 'auth',
+            'namespace' => 'App\Controllers',
         ], function(){
             $this->loadRoute('auth.php');
         });
