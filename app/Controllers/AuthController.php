@@ -227,24 +227,4 @@ class AuthController extends Controller
         return $this->view('auth/recovery', $data);
     }
 
-    public function app($appName = false)
-    {
-        $data = [];
-
-        $cfg = $this->cfg();
-
-        $app = App::make($cfg['app']);
-
-        if ($user = $app->auth($appName)) {
-            Auth::setUserCookie($user->id);
-            return Redirect::home();
-        }
-
-        $list = App::make($cfg['app'])->getAppsInfo();
-
-        $data['list'] = $list;
-
-        return $this->view('auth/auth',$data);
-    }
-
 }

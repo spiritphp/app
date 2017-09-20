@@ -14,15 +14,15 @@ class Users extends Migration
         Schema::create('users', function (Table $table) {
             $table->bigSerial('id')->unique()
                 ->timestamps()
+                ->softRemove()
                 ->string('uid', 8)->unique()
                 ->string('email', 255)->unique()
                 ->string('login', 255)->unique()
                 ->string('token', 64)->unique()
                 ->string('password', 60)
-                ->inet('ip')
                 ->string('version', 16)->default(1)
                 ->jsonb('roles')
-                ->boolean('active')->notNull()->default(false)
+                ->timestamp('activated_at')
                 ->string('block', 255)
                 ->timestamp('date_online')->now()->notNull()
             ;
