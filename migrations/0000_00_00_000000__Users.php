@@ -17,13 +17,10 @@ class Users extends Migration
                 ->softRemove()
                 ->string('uid', 8)->unique()
                 ->string('email', 255)->unique()
-                ->string('login', 255)->unique()
                 ->string('token', 64)->unique()
                 ->string('password', 60)
                 ->string('version', 16)->default(1)
                 ->jsonb('roles')
-                ->timestamp('activated_at')
-                ->string('block', 255)
                 ->timestamp('date_online')->now()->notNull()
             ;
         });
