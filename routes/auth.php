@@ -1,33 +1,31 @@
 <?php
 
-Route::get('captcha/{unique_id}','AuthController@captcha');
-
 Route::add('login',[
     'uses' => 'AuthController@login',
-    'middleware' => ['guest']
+    'middleware' => ['guest'],
+    'as' => 'login'
 ]);
 
-Route::add('registration',[
-    'uses' => 'AuthController@registration',
-    'middleware' => ['guest']
+Route::add('join',[
+    'uses' => 'AuthController@join',
+    'middleware' => ['guest'],
+    'as' => 'join'
 ]);
 
 Route::add('logout',[
     'uses' => 'AuthController@logout',
-    'middleware' => ['auth']
+    'middleware' => ['auth'],
+    'as' => 'logout'
 ]);
 
 Route::add('recovery/{hash?}',[
     'uses' => 'AuthController@recovery',
-    'middleware' => ['guest']
-]);
-
-Route::add('app/{type?}',[
-    'uses' => 'AuthController@app',
-    'middleware' => ['guest']
+    'middleware' => ['guest'],
+    'as' => 'recovery'
 ]);
 
 Route::add('activation/{code}',[
     'uses' => 'AuthController@activation',
-    'middleware' => ['guest']
+    'middleware' => ['guest'],
+    'as' => 'activation'
 ]);

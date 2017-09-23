@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use Spirit\Auth;
 use Spirit\Engine;
+use Spirit\Request;
 use Spirit\Response\Redirect;
+use Spirit\Services\Validator;
 use Spirit\Structure\Controller;
 
 class AuthController extends Controller
@@ -20,62 +22,29 @@ class AuthController extends Controller
 
     public function login()
     {
-        $form = Form::make()
-            ->text('login', 'Никнейм', 'required')
-            ->password('password', 'Пароль', 'required')
-            ->protectCaptcha(3)
-            ->submit('Вход', 'btn btn-success');
+        $request = Request::only('email','is_remember');
 
-        $form->setError(
-            [
-                'login' => [
-                    'required' => 'Введите никнейм',
-                ],
-                'password' => [
-                    'required' => 'Вы не ввели пароль',
-                ],
-            ]
-        );
+        $error = null;
+        if (Request::isPOST()) {
 
-        if ($form->check()) {
+            $validator = Validator::make(Request::all(), [
+                'email' => 'required|email',
+                'password' => 'required|email'
+            ]);
 
-            $d = $form->getData();
-
-            $user = Login::make()
-                ->setPassword($d['password'])
-                ->setLogin($d['login'])
-                ->getUser();
-
-            if ($user) {
-
-                if (!$user->active) {
-                    // Аккаунт не активен
-                    $form->addError(
-                        'Аккаунт ещё не активен.' .
-                        'Мы повторно отправили письмо с активацией на вашу электронную почту.' .
-                        'Перейдите по ссылке в письме для активации вашего аккаунта'
-                    );
-
-                    Activation::make()
-                        ->setUserID($user->id)
-                        ->setLogin($user->login)
-                        ->setEmail($user->email)
-                        ->setUID($user->uid)
-                        ->send('Активация', Engine::dir()->views . 'auth/email/activation.php');
-
-                } elseif ($user->block) {
-                    $form->addError('Аккаунт заблокирован.<br/>Причина: ' . $user->block);
-                } else {
-                    Auth::setUserCookie($user->id);
-                    return Redirect::home();
-                }
-            } else {
-                $form->addError('Неверный логин или пароль');
+            if (
+                $validator->check() &&
+                Auth::authorize(Request::only('email','password'), !!Request::get('is_remember'))
+            ) {
+                return $this->redirect('/');
             }
+
+            $error = 'We couldn\'t verify your credentials.';
         }
 
         return $this->view('auth/login',[
-            'form' => $form
+            'old' => $request,
+            'error' => $error
         ]);
     }
 
