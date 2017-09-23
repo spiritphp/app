@@ -3,34 +3,12 @@
 namespace App\Controllers;
 
 use Spirit\Auth;
-use Spirit\Common\Controllers\Auth\App;
-use Spirit\Auth\Services\Login;
-use Spirit\Auth\Services\Recovery;
-use Spirit\Auth\Services\Registration;
-use Spirit\Auth\Services\Activation;
 use Spirit\Engine;
-use Spirit\Response\Captcha;
-use Spirit\Services\Form;
 use Spirit\Response\Redirect;
 use Spirit\Structure\Controller;
 
 class AuthController extends Controller
 {
-    function captcha($uniqid)
-    {
-        $this->isOnlyThis();
-
-        $result = Captcha::make()
-            ->uniqueId($uniqid)
-            ->draw();
-
-        if (!$result) {
-            $this->abort(404);
-        }
-
-        return '';
-    }
-
     public function logout()
     {
         if (Auth::guest()) {
