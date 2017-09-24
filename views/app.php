@@ -15,14 +15,27 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="<?=route('login');?>">Sign In</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?=route('join');?>">Sign Up</a>
-            </li>
+        <ul class="navbar-nav mr-auto">
+            <? if(Auth::guest()): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?=route('login');?>">Sign In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?=route('join');?>">Sign Up</a>
+                </li>
+            <? else: ?>
+                <li class="nav-item">
+                    Hello, <?=Auth::user()->email;?>
+                </li>
+            <? endif; ?>
         </ul>
+        <? if(Auth::check()): ?>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="<?=route('logout');?>">Logout</a>
+                </li>
+            </ul>
+        <? endif; ?>
     </div>
 </nav>
 <div class="mt-4">
