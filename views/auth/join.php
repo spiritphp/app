@@ -2,11 +2,11 @@
     <div class="row">
         <div class="col-md-6 ml-md-auto mr-md-auto">
 
-            <h1 class="mb-4">Sign In</h1>
+            <h1 class="mb-4">Sign Up</h1>
 
             <? if ($error): ?>
                 <div class="alert alert-danger">
-                    <?= $error; ?>
+                    <?= implode('<br/>', $error); ?>
                 </div>
             <? endif; ?>
 
@@ -20,18 +20,10 @@
                     <label>Password</label>
                     <input type="password" name="password" required class="form-control"/>
                 </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label class="form-check-label">
-                            <input type="checkbox" value="1" name="is_remember" class="form-check-input">
-                            Remember me
-                        </label>
-                    </div>
-                    <div class="col text-right">
-                        <button class="btn btn-success">
-                            Login
-                        </button>
-                    </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-success">
+                        Sign Up
+                    </button>
                 </div>
             </form>
 

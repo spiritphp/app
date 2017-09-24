@@ -2,13 +2,13 @@
 
 Route::add('login',[
     'uses' => 'AuthController@login',
-    'middleware' => ['guest'],
+    'middleware' => ['guest','token'],
     'as' => 'login'
 ]);
 
 Route::add('join',[
     'uses' => 'AuthController@join',
-    'middleware' => ['guest'],
+    'middleware' => ['guest','token'],
     'as' => 'join'
 ]);
 

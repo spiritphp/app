@@ -15,7 +15,7 @@ class Users extends Migration
             $table->bigSerial('id')->unique()
                 ->timestamps()
                 ->softRemove()
-                ->string('uid', 8)->unique()
+                ->string('uid', 16)->unique()
                 ->string('email', 255)->unique()
                 ->string('token', 64)->unique()
                 ->string('password', 60)

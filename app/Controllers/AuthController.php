@@ -29,13 +29,11 @@ class AuthController extends Controller
 
             $validator = Validator::make(Request::all(), [
                 'email' => 'required|email',
-                'password' => 'required|email'
+                'password' => 'required'
             ]);
 
-            if (
-                $validator->check() &&
-                Auth::authorize(Request::only('email','password'), !!Request::get('is_remember'))
-            ) {
+            if ($validator->check()) {
+                Auth::authorize(Request::only('email','password'), !!Request::get('is_remember'));
                 return $this->redirect('/');
             }
 
@@ -43,6 +41,32 @@ class AuthController extends Controller
         }
 
         return $this->view('auth/login',[
+            'old' => $request,
+            'error' => $error
+        ]);
+    }
+
+    public function join()
+    {
+        $request = Request::only('email');
+
+        $error = null;
+        if (Request::isPOST()) {
+
+            $validator = Validator::make(Request::all(), [
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required'
+            ]);
+
+            if ($validator->check()) {
+                Auth::register(Request::only('email','password'));
+                return $this->redirect('/');
+            } else {
+                $error = $validator->getAllError();
+            }
+        }
+
+        return $this->view('auth/join',[
             'old' => $request,
             'error' => $error
         ]);
