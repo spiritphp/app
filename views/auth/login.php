@@ -35,6 +35,10 @@
                 </div>
             </form>
 
+            <div class="text-center">
+                <a href="<?=route('recovery');?>">Forgot Your Password?</a>
+            </div>
+
         </div>
     </div>
 </div>

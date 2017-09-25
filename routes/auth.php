@@ -22,7 +22,11 @@ Route::group([
 
     Route::add('recovery/{hash?}',[
         'uses' => 'AuthController@recovery',
-        'middleware' => ['guest'],
+        'middleware' => [
+            'guest',
+            'token',
+            //'throttle:5,300'
+        ],
         'as' => 'recovery'
     ]);
 

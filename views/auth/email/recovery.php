@@ -1,9 +1,7 @@
-Здравствуйте.
-На Ваш аккаунт был запрос на восстановление пароля.
-Ваш логин: <?= $login; ?>
-
-Перейдите по ссылке и смените пароль
-<?= $link_recovery; ?>
-
-С уважением,
-Администрация <?= $url; ?>
+Hello.<br/>
+Follow the link and change your password<br/>
+<?= $link; ?>
+<br/>
+<br/>
+With respect<br/>
+<?= $url; ?>
