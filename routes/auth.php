@@ -20,14 +20,24 @@ Route::group([
         'as' => 'logout'
     ]);
 
-    Route::add('recovery/{hash?}',[
+    Route::add('recovery',[
         'uses' => 'AuthController@recovery',
+        'middleware' => [
+            'guest',
+            'token',
+            'throttle:5,300'
+        ],
+        'as' => 'recovery'
+    ]);
+
+    Route::add('reset/{hash}',[
+        'uses' => 'AuthController@resetPassword',
         'middleware' => [
             'guest',
             'token',
             //'throttle:5,300'
         ],
-        'as' => 'recovery'
+        'as' => 'reset_password'
     ]);
 
     Route::add('activation/{code}',[

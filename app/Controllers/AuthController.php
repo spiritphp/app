@@ -24,28 +24,29 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function login()
+    public function login(Request\RequestProvider $request)
     {
-        $request = Request::only('email', 'is_remember');
+        $requestData = $request->only('email', 'is_remember');
 
         $error = null;
-        if (Request::isPOST()) {
+        if ($request->isPOST()) {
 
-            $validator = Validator::make(Request::all(), [
+            $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
 
             if ($validator->check()) {
-                Auth::authorize(Request::only('email', 'password'), !!Request::get('is_remember'));
-                return $this->redirect('/');
+                if (Auth::authorize($request->only('email', 'password'), !!$request->get('is_remember'))) {
+                    return $this->redirect('/');
+                }
             }
 
             $error = 'We couldn\'t verify your credentials.';
         }
 
         return $this->view('auth/login', [
-            'old' => $request,
+            'old' => $requestData,
             'error' => $error
         ]);
     }
@@ -86,13 +87,28 @@ class AuthController extends Controller
         return Redirect::to('login');
     }
 
-    public function recovery($hash = null)
+    public function resetPassword(Request\RequestProvider $request, $hash)
     {
-        if ($hash) {
+        $recovery = Auth\DefaultDriver\Recovery::make()->initForToken($hash)->get();
+
+        if (!$recovery) {
+            $this->abort(404);
+        }
+
+        $error = null;
+
+        if ($request->isPOST()) {
 
         }
 
 
+        return $this->view('auth/reset-password', [
+            'error' => $error
+        ]);
+    }
+
+    public function recovery()
+    {
         $error = null;
         $success = null;
         if (Request::isPOST()) {
@@ -112,7 +128,7 @@ class AuthController extends Controller
                     Mail::send(
                         'auth.email.recovery',
                         [
-                            'link' => route('recovery', $recovery->token),
+                            'link' => route('reset_password', $recovery->token),
                             'url' => Engine::i()->domain
                         ],
                         function(Mail\Message $message) use ($user, $recovery) {
