@@ -24,7 +24,7 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function login(Request\RequestProvider $request)
+    public function login(Request $request)
     {
         $requestData = $request->only('email', 'is_remember');
 
@@ -51,20 +51,20 @@ class AuthController extends Controller
         ]);
     }
 
-    public function join()
+    public function join(Request $request)
     {
-        $request = Request::only('email');
+        $requestData = $request->only('email');
 
         $error = null;
-        if (Request::isPOST()) {
+        if ($request->isPOST()) {
 
-            $validator = Validator::make(Request::all(), [
+            $validator = Validator::make($request->all(), [
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
             ]);
 
             if ($validator->check()) {
-                Auth::register(Request::only('email', 'password'));
+                Auth::register($request->only('email', 'password'));
                 return $this->redirect('/');
             } else {
                 $error = $validator->getAllError();
@@ -72,7 +72,7 @@ class AuthController extends Controller
         }
 
         return $this->view('auth/join', [
-            'old' => $request,
+            'old' => $requestData,
             'error' => $error
         ]);
     }
@@ -87,11 +87,11 @@ class AuthController extends Controller
         return Redirect::to('login');
     }
 
-    public function resetPassword(Request\RequestProvider $request, $hash)
+    public function resetPassword(Request $request, $hash)
     {
-        $recovery = Auth\DefaultDriver\Recovery::make()->initForToken($hash)->get();
+        $recoveryService = Auth\DefaultDriver\Recovery::token($hash);
 
-        if (!$recovery) {
+        if (!$recoveryService) {
             $this->abort(404);
         }
 
@@ -107,23 +107,23 @@ class AuthController extends Controller
         ]);
     }
 
-    public function recovery()
+    public function recovery(Request $request)
     {
         $error = null;
         $success = null;
-        if (Request::isPOST()) {
-            $validator = Validator::make(Request::only('email'), [
+        if ($request->isPOST()) {
+            $validator = Validator::make($request->only('email'), [
                 'email' => 'required|email'
             ]);
 
             if ($validator->check()) {
-                $email = Request::get('email');
+                $email = $request->get('email');
 
                 /**
                  * @var User $user
                  */
                 if ($user = User::where('email', $email)->first()) {
-                    $recovery = Auth\DefaultDriver\Recovery::user($user)->init()->get();
+                    $recovery = Auth\DefaultDriver\Recovery::user($user)->get();
 
                     Mail::send(
                         'auth.email.recovery',

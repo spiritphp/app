@@ -17,10 +17,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <? if(Auth::guest()): ?>
-                <li class="nav-item">
+                <li class="nav-item<?=routeIs('login') ? ' active' : '';?>">
                     <a class="nav-link" href="<?=route('login');?>">Sign In</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item<?=routeIs('join') ? ' active' : '';?>">
                     <a class="nav-link" href="<?=route('join');?>">Sign Up</a>
                 </li>
             <? else: ?>
