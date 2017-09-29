@@ -98,9 +98,21 @@ class AuthController extends Controller
         $error = null;
 
         if ($request->isPOST()) {
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|confirmed'
+            ]);
+            $validator->customError('password','The passwords must match');
 
+            if ($validator->check()) {
+                $recovery = $recoveryService->get();
+                Auth\DefaultDriver\Password::set($recovery->user, $request->get('password'));
+                $recoveryService->use();
+                Auth::loginById($recovery->user->id);
+                return $this->redirect('/');
+            }
+
+            $error = $validator->getAllError();
         }
-
 
         return $this->view('auth/reset-password', [
             'error' => $error

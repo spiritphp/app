@@ -6,7 +6,7 @@
 
             <? if ($error): ?>
                 <div class="alert alert-danger">
-                    <?= $error; ?>
+                    <?= implode('<br/>',$error); ?>
                 </div>
             <? endif; ?>
 
@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-group">
                     <label>Confirm password</label>
-                    <input type="password" name="password_confirm" value="" required class="form-control" />
+                    <input type="password" name="password_confirmation" value="" required class="form-control" />
                 </div>
                 <div class="form-group text-right">
                     <button class="btn btn-success">
