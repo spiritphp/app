@@ -28,7 +28,7 @@ class AuthController extends Controller
     {
         $requestData = $request->only('email', 'is_remember');
 
-        $error = null;
+        $error = Request\Session::get('error');
         if ($request->isPOST()) {
 
             $validator = Validator::make($request->all(), [
@@ -43,6 +43,7 @@ class AuthController extends Controller
             }
 
             $error = 'We couldn\'t verify your credentials.';
+            return $this->redirect()->back()->with('error', $error);
         }
 
         return $this->view('auth/login', [
