@@ -14,7 +14,7 @@
                 <?=inputToken();?>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" value="<?= $old['email']; ?>" required class="form-control" />
+                    <input type="email" name="email" value="<?= old('email'); ?>" required class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Password</label>

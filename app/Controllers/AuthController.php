@@ -43,7 +43,7 @@ class AuthController extends Controller
             }
 
             $error = 'We couldn\'t verify your credentials.';
-            return $this->redirect()->back()->with('error', $error);
+            return $this->redirect()->back()->with('error', $error)->withInputs();
         }
 
         return $this->view('auth/login', [
