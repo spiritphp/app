@@ -4,9 +4,9 @@
 
             <h1 class="mb-4">Sign In</h1>
 
-            <? if ($error): ?>
+            <? if (count($errors)): ?>
                 <div class="alert alert-danger">
-                    <?= $error; ?>
+                    <?= $errors->join(); ?>
                 </div>
             <? endif; ?>
 

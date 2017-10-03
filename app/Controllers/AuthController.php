@@ -28,7 +28,6 @@ class AuthController extends Controller
     {
         $requestData = $request->only('email', 'is_remember');
 
-        $error = Request\Session::get('error');
         if ($request->isPOST()) {
 
             $validator = Validator::make($request->all(), [
@@ -42,13 +41,14 @@ class AuthController extends Controller
                 }
             }
 
-            $error = 'We couldn\'t verify your credentials.';
-            return $this->redirect()->back()->with('error', $error)->withInputs();
+            $errors = ['We couldn\'t verify your credentials.'];
+
+            return $this->redirect()->back()->withErrors($errors)->withInputs();
         }
 
         return $this->view('auth/login', [
             'old' => $requestData,
-            'error' => $error
+            'errors' => $request->errors()
         ]);
     }
 
