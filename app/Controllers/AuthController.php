@@ -24,32 +24,28 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function login(Request $request)
+    public function loginGet(Request $request)
     {
-        $requestData = $request->only('email', 'is_remember');
-
-        if ($request->isPOST()) {
-
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
-
-            if ($validator->check()) {
-                if (Auth::authorize($request->only('email', 'password'), !!$request->get('is_remember'))) {
-                    return $this->redirect('/');
-                }
-            }
-
-            $errors = ['We couldn\'t verify your credentials.'];
-
-            return $this->redirect()->back()->withErrors($errors)->withInputs();
-        }
-
         return $this->view('auth/login', [
-            'old' => $requestData,
             'errors' => $request->errors()
         ]);
+    }
+
+    public function loginPost(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ],null,['We couldn\'t verify your credentials.']);
+
+        if (!Auth::authorize($request->only('email', 'password'), !!$request->get('is_remember'))) {
+            return $this->redirect()
+                ->back()
+                ->withErrors(['We couldn\'t verify your credentials.'])
+                ->withInputs();
+        }
+
+        return $this->redirect('/');
     }
 
     public function join(Request $request)
@@ -80,7 +76,9 @@ class AuthController extends Controller
 
     public function activation($code)
     {
-        if ($user = Activation::make()->setCode($code)->activate()) {
+        if ($user = Activation::make()
+            ->setCode($code)
+            ->activate()) {
             Auth::setUserCookie($user->id);
             return Redirect::home();
         }
@@ -102,7 +100,7 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'password' => 'required|confirmed'
             ]);
-            $validator->customError('password','The passwords must match');
+            $validator->customError('password', 'The passwords must match');
 
             if ($validator->check()) {
                 $recovery = $recoveryService->get();
@@ -135,8 +133,10 @@ class AuthController extends Controller
                 /**
                  * @var User $user
                  */
-                if ($user = User::where('email', $email)->first()) {
-                    $recovery = Auth\DefaultDriver\Recovery::user($user)->get();
+                if ($user = User::where('email', $email)
+                    ->first()) {
+                    $recovery = Auth\DefaultDriver\Recovery::user($user)
+                        ->get();
 
                     Mail::send(
                         'auth.email.recovery',

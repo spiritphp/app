@@ -2,10 +2,15 @@
 Route::group([
     'prefix' => 'auth'
 ], function(){
-    Route::add('login',[
-        'uses' => 'AuthController@login',
-        'middleware' => ['guest','token'],
+    Route::get('login',[
+        'uses' => 'AuthController@loginGet',
+        'middleware' => ['guest'],
         'as' => 'login'
+    ]);
+
+    Route::post('login',[
+        'uses' => 'AuthController@loginPost',
+        'middleware' => ['guest','token'],
     ]);
 
     Route::add('join',[

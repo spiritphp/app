@@ -23,7 +23,9 @@
                 <div class="form-group row">
                     <div class="col">
                         <label class="form-check-label">
-                            <input type="checkbox" value="1" name="is_remember" class="form-check-input">
+                            <input type="checkbox" value="1" <?= old('is_remember') ? 'checked' : ''; ?>
+                                   name="is_remember"
+                                   class="form-check-input">
                             Remember me
                         </label>
                     </div>
