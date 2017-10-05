@@ -4,7 +4,7 @@ use Spirit\Services\Validator\Rule;
 return [
     Rule::TYPE_EXISTS => 'Неверное значение в поле <b>:attr</b>',
     Rule::TYPE_UNIQUE => 'Значение в поле <b>:attr</b> должно быть уникальным',
-    Rule::TYPE_EMAIL => 'Значение в поле <b>:attr</b> не проходит проверку на электронный адрес',
+    Rule::TYPE_EMAIL => 'The <b>:attr</b> must be a valid email address.',
     Rule::TYPE_REQUIRED => 'Поле <b>:attr</b> обязательно к заполнению',
     Rule::TYPE_REQUIRED_IF => [
         'exist' => 'Поле <b>:attr</b> обязательно к заполнению, если заполнено поле <b>:attr_if</b>',
