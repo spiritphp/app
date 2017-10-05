@@ -4,9 +4,9 @@
 
             <h1 class="mb-4">Sign Up</h1>
 
-            <? if ($error): ?>
+            <? if (count($errors)): ?>
                 <div class="alert alert-danger">
-                    <?= implode('<br/>', $error); ?>
+                    <?= $errors->join(); ?>
                 </div>
             <? endif; ?>
 
@@ -14,7 +14,7 @@
                 <?=inputToken();?>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" value="<?= $old['email']; ?>" required class="form-control" />
+                    <input type="email" name="email" value="<?= old('email'); ?>" required class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Password</label>

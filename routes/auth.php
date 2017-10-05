@@ -13,10 +13,15 @@ Route::group([
         'middleware' => ['guest','token'],
     ]);
 
-    Route::add('join',[
-        'uses' => 'AuthController@join',
-        'middleware' => ['guest','token'],
+    Route::get('join',[
+        'uses' => 'AuthController@joinGet',
+        'middleware' => ['guest',],
         'as' => 'join'
+    ]);
+
+    Route::post('join',[
+        'uses' => 'AuthController@joinPost',
+        'middleware' => ['guest','token'],
     ]);
 
     Route::add('logout',[

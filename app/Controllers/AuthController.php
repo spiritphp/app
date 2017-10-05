@@ -34,9 +34,12 @@ class AuthController extends Controller
     public function loginPost(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required'
-        ],null,['We couldn\'t verify your credentials.']);
+        ],[
+            'email' => 'Email',
+            'password' => 'Password'
+        ]);
 
         if (!Auth::authorize($request->only('email', 'password'), !!$request->get('is_remember'))) {
             return $this->redirect()
@@ -48,30 +51,28 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function join(Request $request)
+    public function joinGet(Request $request)
     {
-        $requestData = $request->only('email');
+        return $this->view('auth/join', [
+            'errors' => $request->errors()
+        ]);
+    }
 
-        $error = null;
-        if ($request->isPOST()) {
-
-            $validator = Validator::make($request->all(), [
+    public function joinPost(Request $request)
+    {
+        $request->validate(
+            [
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
-            ]);
+            ],
+            [
+                'email' => 'Email',
+                'password' => 'Password'
+            ]
+        );
 
-            if ($validator->check()) {
-                Auth::register($request->only('email', 'password'));
-                return $this->redirect('/');
-            } else {
-                $error = $validator->getAllError();
-            }
-        }
-
-        return $this->view('auth/join', [
-            'old' => $requestData,
-            'error' => $error
-        ]);
+        Auth::register($request->only('email', 'password'));
+        return $this->redirect('/');
     }
 
     public function activation($code)
