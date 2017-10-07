@@ -4,9 +4,9 @@
 
             <h1 class="mb-4">Reset Password</h1>
 
-            <? if ($error): ?>
+            <? if (count($errors)): ?>
                 <div class="alert alert-danger">
-                    <?= $error; ?>
+                    <?= $errors->join(); ?>
                 </div>
             <? elseif ($success): ?>
                 <div class="alert alert-success">
@@ -14,18 +14,20 @@
                 </div>
             <? endif; ?>
 
-            <form action="" method="POST">
-                <?=inputToken();?>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" value="" required class="form-control" />
-                </div>
-                <div class="form-group text-right">
-                    <button class="btn btn-success">
-                        Send reset instruction
-                    </button>
-                </div>
-            </form>
+            <? if (!$success): ?>
+                <form action="" method="POST">
+                    <?=inputToken();?>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" value="" required class="form-control" />
+                    </div>
+                    <div class="form-group text-right">
+                        <button class="btn btn-success">
+                            Send reset instruction
+                        </button>
+                    </div>
+                </form>
+            <? endif; ?>
 
         </div>
     </div>
