@@ -119,51 +119,49 @@ class AuthController extends Controller
         ]);
     }
 
-    public function recovery(Request $request)
+    public function recoveryGet(Request $request)
     {
-        $error = null;
-        $success = null;
-        if ($request->isPOST()) {
-            $validator = Validator::make($request->only('email'), [
-                'email' => 'required|email'
+        return $this->view('auth/recovery', [
+            'errors' => $request->errors(),
+            'success' => Request\Session::get('success')
+        ]);
+    }
+
+    public function recoveryPost(Request $request)
+    {
+        $request->validate(
+            [
+                'email' => 'required|email',
+            ],
+            [
+                'email' => 'Email'
+            ]
+        );
+
+        /**
+         * @var User $user
+         */
+        if (!$user = User::where('email', $request->get('email'))->first()) {
+            return $this->redirect()->back()->withErrors([
+                'We can\'t find a user with that e-mail address.'
             ]);
-
-            if ($validator->check()) {
-                $email = $request->get('email');
-
-                /**
-                 * @var User $user
-                 */
-                if ($user = User::where('email', $email)
-                    ->first()) {
-                    $recovery = Auth\DefaultDriver\Recovery::user($user)
-                        ->get();
-
-                    Mail::send(
-                        'auth.email.recovery',
-                        [
-                            'link' => route('reset_password', $recovery->token),
-                            'url' => Engine::i()->domain
-                        ],
-                        function(Mail\Message $message) use ($user, $recovery) {
-                            $message->to($user->email)
-                                ->subject('Reset Password');
-                        });
-
-                    $success = true;
-                } else {
-                    $error = 'We can\'t find a user with that e-mail address.';
-                }
-
-            } else {
-                $error = $validator->getFirstErrorForAttr('email');
-            }
         }
 
-        return $this->view('auth/recovery', [
-            'error' => $error,
-            'success' => $success
-        ]);
+        $recovery = Auth\DefaultDriver\Recovery::user($user)
+            ->get();
+
+        Mail::send(
+            'auth.email.recovery',
+            [
+                'link' => route('reset_password', $recovery->token),
+                'url' => Engine::i()->domain
+            ],
+            function(Mail\Message $message) use ($user, $recovery) {
+                $message->to($user->email)
+                    ->subject('Reset Password');
+            });
+
+        return $this->redirect()->back()->with('success',1);
     }
 
 }
