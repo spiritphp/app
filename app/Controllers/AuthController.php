@@ -113,7 +113,8 @@ class AuthController extends Controller
                 'password' => 'required|confirmed'
             ],
             [
-                'password' => 'Password'
+                'password' => 'Password',
+                'password_confirmation' => 'Confirm password'
             ]
         );
 
@@ -163,7 +164,7 @@ class AuthController extends Controller
         Mail::send(
             'auth.email.recovery',
             [
-                'link' => route('reset_password', $recovery->token),
+                'link' => route('reset_password', $recovery->token, true),
                 'url' => Engine::i()->domain
             ],
             function(Mail\Message $message) use ($user, $recovery) {

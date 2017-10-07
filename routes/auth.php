@@ -43,18 +43,25 @@ Route::group([
         'middleware' => [
             'guest',
             'token',
-            'throttle:5,300'
+            'throttle:5,60'
         ]
     ]);
 
-    Route::add('reset/{hash}',[
-        'uses' => 'AuthController@resetPassword',
+    Route::get('reset/{hash}',[
+        'uses' => 'AuthController@resetPasswordGet',
+        'middleware' => [
+            'guest'
+        ],
+        'as' => 'reset_password'
+    ]);
+
+    Route::post('reset/{hash}',[
+        'uses' => 'AuthController@resetPasswordPost',
         'middleware' => [
             'guest',
             'token',
-            //'throttle:5,300'
-        ],
-        'as' => 'reset_password'
+            'throttle:5,60'
+        ]
     ]);
 
     Route::add('activation/{code}',[

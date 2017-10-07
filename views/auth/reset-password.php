@@ -4,9 +4,9 @@
 
             <h1 class="mb-4">Change password</h1>
 
-            <? if ($error): ?>
+            <? if (count($errors)): ?>
                 <div class="alert alert-danger">
-                    <?= implode('<br/>',$error); ?>
+                    <?= $errors->join(); ?>
                 </div>
             <? endif; ?>
 
