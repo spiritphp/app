@@ -36,7 +36,7 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required',
             'password' => 'required'
-        ],[
+        ], [
             'email' => 'Email',
             'password' => 'Password'
         ]);
@@ -87,7 +87,7 @@ class AuthController extends Controller
         return Redirect::to('login');
     }
 
-    public function resetPassword(Request $request, $hash)
+    public function resetPasswordGet(Request $request, $hash)
     {
         $recoveryService = Auth\DefaultDriver\Recovery::token($hash);
 
@@ -95,28 +95,35 @@ class AuthController extends Controller
             $this->abort(404);
         }
 
-        $error = null;
+        return $this->view('auth/reset-password', [
+            'errors' => $request->errors()
+        ]);
+    }
 
-        if ($request->isPOST()) {
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|confirmed'
-            ]);
-            $validator->customError('password', 'The passwords must match');
+    public function resetPasswordPost(Request $request, $hash)
+    {
+        $recoveryService = Auth\DefaultDriver\Recovery::token($hash);
 
-            if ($validator->check()) {
-                $recovery = $recoveryService->get();
-                Auth\DefaultDriver\Password::set($recovery->user, $request->get('password'));
-                $recoveryService->use();
-                Auth::loginById($recovery->user->id);
-                return $this->redirect('/');
-            }
-
-            $error = $validator->getAllError();
+        if (!$recoveryService) {
+            $this->abort(404);
         }
 
-        return $this->view('auth/reset-password', [
-            'error' => $error
-        ]);
+        $request->validate(
+            [
+                'password' => 'required|confirmed'
+            ],
+            [
+                'password' => 'Password'
+            ]
+        );
+
+        $recovery = $recoveryService->get();
+        Auth\DefaultDriver\Password::set($recovery->user, $request->get('password'));
+        $recoveryService->use();
+
+        Auth::loginById($recovery->user->id);
+
+        return $this->redirect('/');
     }
 
     public function recoveryGet(Request $request)
@@ -141,10 +148,13 @@ class AuthController extends Controller
         /**
          * @var User $user
          */
-        if (!$user = User::where('email', $request->get('email'))->first()) {
-            return $this->redirect()->back()->withErrors([
-                'We can\'t find a user with that e-mail address.'
-            ]);
+        if (!$user = User::where('email', $request->get('email'))
+            ->first()) {
+            return $this->redirect()
+                ->back()
+                ->withErrors([
+                    'We can\'t find a user with that e-mail address.'
+                ]);
         }
 
         $recovery = Auth\DefaultDriver\Recovery::user($user)
@@ -161,7 +171,9 @@ class AuthController extends Controller
                     ->subject('Reset Password');
             });
 
-        return $this->redirect()->back()->with('success',1);
+        return $this->redirect()
+            ->back()
+            ->with('success', 1);
     }
 
 }
