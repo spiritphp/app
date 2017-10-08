@@ -6,11 +6,11 @@
     "production": "gulp --production",
     "dev": "gulp"
   },
-  "devDependencies": {
-
-  },
+  "devDependencies": {},
   "dependencies": {
-
+    "gulp-query": "^1.0.3",
+    "gulp-query-scss": "^1.0.0",
+    "gulp-query-webpack": "^1.0.1"
   },
   "author": "Marat Nuriev",
   "email": "nurieff@gmail.com",
