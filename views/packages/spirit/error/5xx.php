@@ -54,8 +54,8 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">Технические работы.</div>
-        <div class="title">Попробуйте позже</div>
+        <div class="title">The technical work.</div>
+        <div class="title">Please, try again later</div>
 
     </div>
 </div>

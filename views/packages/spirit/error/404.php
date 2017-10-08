@@ -54,8 +54,8 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">404 | Страница не найдена</div>
-        <div class="title">&larr; <a href="/" class="title__link">Вернуться на главную</a></div>
+        <div class="title">404 | Page not found</div>
+        <div class="title">&larr; <a href="/" class="title__link">Back to main</a></div>
 
     </div>
 </div>
