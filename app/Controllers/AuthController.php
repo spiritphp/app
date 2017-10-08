@@ -108,7 +108,7 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function recoveryGet(Request $request)
+    public function recoveryGet()
     {
         return $this->view('auth/recovery');
     }
