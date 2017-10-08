@@ -4,9 +4,9 @@
 
             <h1 class="mb-4">Change password</h1>
 
-            <? if (count($errors)): ?>
+            <? if (count(errors())): ?>
                 <div class="alert alert-danger">
-                    <?= $errors->join(); ?>
+                    <?= errors()->join(); ?>
                 </div>
             <? endif; ?>
 

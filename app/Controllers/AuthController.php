@@ -8,7 +8,6 @@ use Spirit\Engine;
 use Spirit\Request;
 use Spirit\Response\Redirect;
 use Spirit\Services\Mail;
-use Spirit\Services\Validator;
 use Spirit\Structure\Controller;
 
 class AuthController extends Controller
@@ -24,11 +23,9 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function loginGet(Request $request)
+    public function loginGet()
     {
-        return $this->view('auth/login', [
-            'errors' => $request->errors()
-        ]);
+        return $this->view('auth/login');
     }
 
     public function loginPost(Request $request)
@@ -51,11 +48,9 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function joinGet(Request $request)
+    public function joinGet()
     {
-        return $this->view('auth/join', [
-            'errors' => $request->errors()
-        ]);
+        return $this->view('auth/join');
     }
 
     public function joinPost(Request $request)
@@ -75,19 +70,7 @@ class AuthController extends Controller
         return $this->redirect('/');
     }
 
-    public function activation($code)
-    {
-        if ($user = Activation::make()
-            ->setCode($code)
-            ->activate()) {
-            Auth::setUserCookie($user->id);
-            return Redirect::home();
-        }
-
-        return Redirect::to('login');
-    }
-
-    public function resetPasswordGet(Request $request, $hash)
+    public function resetPasswordGet($hash)
     {
         $recoveryService = Auth\DefaultDriver\Recovery::token($hash);
 
@@ -95,9 +78,7 @@ class AuthController extends Controller
             $this->abort(404);
         }
 
-        return $this->view('auth/reset-password', [
-            'errors' => $request->errors()
-        ]);
+        return $this->view('auth/reset-password');
     }
 
     public function resetPasswordPost(Request $request, $hash)
@@ -129,10 +110,7 @@ class AuthController extends Controller
 
     public function recoveryGet(Request $request)
     {
-        return $this->view('auth/recovery', [
-            'errors' => $request->errors(),
-            'success' => Request\Session::get('success')
-        ]);
+        return $this->view('auth/recovery');
     }
 
     public function recoveryPost(Request $request)

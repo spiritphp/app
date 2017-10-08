@@ -4,17 +4,17 @@
 
             <h1 class="mb-4">Reset Password</h1>
 
-            <? if (count($errors)): ?>
+            <? if (count(errors())): ?>
                 <div class="alert alert-danger">
-                    <?= $errors->join(); ?>
+                    <?= errors()->join(); ?>
                 </div>
-            <? elseif ($success): ?>
+            <? elseif (session('success')): ?>
                 <div class="alert alert-success">
                     We have sent you an email with instruction
                 </div>
             <? endif; ?>
 
-            <? if (!$success): ?>
+            <? if (!session('success')): ?>
                 <form action="" method="POST">
                     <?=inputToken();?>
                     <div class="form-group">
