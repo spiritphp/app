@@ -2,13 +2,13 @@
 use Spirit\Services\Validator\Rule;
 
 return [
-    Rule::TYPE_EXISTS => 'Неверное значение в поле <b>:attr</b>',
-    Rule::TYPE_UNIQUE => 'Значение в поле <b>:attr</b> должно быть уникальным',
+    Rule::TYPE_EXISTS => 'The selected <b>:attr</b> is invalid',
+    Rule::TYPE_UNIQUE => 'The <b>:attr</b> has already been taken',
     Rule::TYPE_EMAIL => 'The <b>:attr</b> must be a valid email address.',
-    Rule::TYPE_REQUIRED => 'Поле <b>:attr</b> обязательно к заполнению',
+    Rule::TYPE_REQUIRED => 'The <b>:attr</b> field is required',
     Rule::TYPE_REQUIRED_IF => [
         'exist' => 'Поле <b>:attr</b> обязательно к заполнению, если заполнено поле <b>:attr_if</b>',
-        'value' => 'Поле <b>:attr</b> обязательно к заполнению, если поле <b>:attr_if</b> имеет значение <b>{{VALUE}}</b>',
+        'value' => 'Поле <b>:attr</b> обязательно к заполнению, если поле <b>:attr_if</b> имеет значение <b>:value</b>',
     ],
     Rule::TYPE_SAME => 'Значения в поле <b>:attr</b> и в поле  <b>:attr_same</b> должны совпадать',
     Rule::TYPE_URL => 'Неверное значение в поле <b>:attr</b>',
