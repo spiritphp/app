@@ -15,9 +15,9 @@ return [
     Rule::TYPE_DATE => 'The <b>:attr</b> is not a valid date',
     Rule::TYPE_DATE_FORMAT => 'The <b>:attr</b> does not match the format',
     Rule::TYPE_BOOLEAN => 'The <b>:attr</b> field must be true or false.',
-    Rule::TYPE_AFTER => 'Дата в поле <b>:attr</b> должна быть больше :after',
-    Rule::TYPE_BEFORE => 'Дата в поле <b>:attr</b> должна быть меньше :before',
-    Rule::TYPE_IMAGE => 'Загруженный файл <b>:attr</b> не является изображением',
+    Rule::TYPE_AFTER => 'The <b>:attr</b> must be a date after :after',
+    Rule::TYPE_BEFORE => 'The <b>:attr</b> must be a date before :before',
+    Rule::TYPE_IMAGE => 'The <b>:attr</b> must be an image',
     Rule::TYPE_BETWEEN => [
         'string' => 'Значение в поле <b>:attr</b> должно быть от :min до :max символов',
         'numeric' => 'Значение в поле <b>:attr</b> должно быть от :min до :max',
