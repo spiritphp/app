@@ -30,16 +30,16 @@ return [
     Rule::TYPE_CONFIRMED => 'The <b>:attr</b> confirmation does not match',
     Rule::TYPE_REGEX => 'The <b>:attr</b> format is invalid',
     Rule::TYPE_MIN => [
-        'string' => 'Значение в поле <b>:attr</b> должно быть больше :min символов',
-        'numeric' => 'Значение в поле <b>:attr</b> должно быть больше :min',
-        'array' => 'Количество значений в поле <b>:attr</b> должно быть больше :min',
-        'file' => 'Загруженный файл <b>:attr</b> должен быть размером больше :min байт',
+        'numeric' => 'The :attribute must be at least :min.',
+        'file' => 'The :attribute must be at least :min kilobytes.',
+        'string' => 'The :attribute must be at least :min characters.',
+        'array' => 'The :attribute must have at least :min items.',
     ],
     Rule::TYPE_MAX => [
-        'string' => 'Значение в поле <b>:attr</b> должно быть меньше :max символов',
-        'numeric' => 'Значение в поле <b>:attr</b> должно быть меньше :max',
-        'array' => 'Количество значений в поле <b>:attr</b> должно быть меньше :max',
-        'file' => 'Загруженный файл <b>:attr</b> должен быть размером меньше :min байт',
+        'numeric' => 'The :attribute may not be greater than :max.',
+        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'string' => 'The :attribute may not be greater than :max characters.',
+        'array' => 'The :attribute may not have more than :max items.',
     ],
     'customs' => []
 ];
