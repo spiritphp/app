@@ -7,8 +7,8 @@ return [
     Rule::TYPE_EMAIL => 'The <b>:attr</b> must be a valid email address.',
     Rule::TYPE_REQUIRED => 'The <b>:attr</b> field is required',
     Rule::TYPE_REQUIRED_IF => [
-        'exist' => 'Поле <b>:attr</b> обязательно к заполнению, если заполнено поле <b>:attr_if</b>',
-        'value' => 'Поле <b>:attr</b> обязательно к заполнению, если поле <b>:attr_if</b> имеет значение <b>:value</b>',
+        'exist' => 'The <b>:attr</b> field is required when <b>:attr_if</b> is filled',
+        'value' => 'The <b>:attr</b> field is required when <b>:attr_if</b> is <b>:value</b>',
     ],
     Rule::TYPE_SAME => 'The <b>:attr</b> and <b>:attr_same</b> must match',
     Rule::TYPE_URL => 'The <b>:attr</b> is not a valid url',
@@ -30,16 +30,16 @@ return [
     Rule::TYPE_CONFIRMED => 'The <b>:attr</b> confirmation does not match',
     Rule::TYPE_REGEX => 'The <b>:attr</b> format is invalid',
     Rule::TYPE_MIN => [
-        'numeric' => 'The :attribute must be at least :min.',
-        'file' => 'The :attribute must be at least :min kilobytes.',
-        'string' => 'The :attribute must be at least :min characters.',
-        'array' => 'The :attribute must have at least :min items.',
+        'numeric' => 'The <b>:attr</b> must be at least :min.',
+        'file' => 'The <b>:attr</b> must be at least :min kilobytes.',
+        'string' => 'The <b>:attr</b> must be at least :min characters.',
+        'array' => 'The <b>:attr</b> must have at least :min items.',
     ],
     Rule::TYPE_MAX => [
-        'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
-        'string' => 'The :attribute may not be greater than :max characters.',
-        'array' => 'The :attribute may not have more than :max items.',
+        'numeric' => 'The <b>:attr</b> may not be greater than :max.',
+        'file' => 'The <b>:attr</b> may not be greater than :max kilobytes.',
+        'string' => 'The <b>:attr</b> may not be greater than :max characters.',
+        'array' => 'The <b>:attr</b> may not have more than :max items.',
     ],
     'customs' => []
 ];
