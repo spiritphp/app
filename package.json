@@ -9,6 +9,7 @@
   "devDependencies": {},
   "dependencies": {
     "gulp-query": "^1.0.3",
+    "gulp-query-copy": "^1.0.1",
     "gulp-query-scss": "^1.0.0",
     "gulp-query-webpack": "^1.0.1"
   },
