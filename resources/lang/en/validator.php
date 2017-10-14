@@ -41,5 +41,18 @@ return [
         'string' => 'The <b>:attr</b> may not be greater than :max characters.',
         'array' => 'The <b>:attr</b> may not have more than :max items.',
     ],
-    'customs' => []
+
+    'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'custom-message',
+        ]
+    ],
+
+    'attributes' => [
+        'attribute-name' => 'Friendly Name',
+
+        'email' => 'Email',
+        'password' => 'Password',
+        'password_confirmation' => 'Confirm password'
+    ],
 ];

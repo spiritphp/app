@@ -33,9 +33,6 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required',
             'password' => 'required'
-        ], [
-            'email' => 'Email',
-            'password' => 'Password'
         ]);
 
         if (!Auth::authorize($request->only('email', 'password'), !!$request->get('is_remember'))) {
@@ -59,10 +56,6 @@ class AuthController extends Controller
             [
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
-            ],
-            [
-                'email' => 'Email',
-                'password' => 'Password'
             ]
         );
 
@@ -92,10 +85,6 @@ class AuthController extends Controller
         $request->validate(
             [
                 'password' => 'required|confirmed'
-            ],
-            [
-                'password' => 'Password',
-                'password_confirmation' => 'Confirm password'
             ]
         );
 
@@ -118,9 +107,6 @@ class AuthController extends Controller
         $request->validate(
             [
                 'email' => 'required|email',
-            ],
-            [
-                'email' => 'Email'
             ]
         );
 

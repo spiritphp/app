@@ -41,5 +41,18 @@ return [
         'array' => 'Количество значений в поле <b>:attr</b> должно быть меньше :max',
         'file' => 'Загруженный файл <b>:attr</b> должен быть размером меньше :min байт',
     ],
-    'customs' => []
+
+    'custom' => [
+        'attribute-name' => [
+            'rule-name' => 'Ваше сообщение',
+        ]
+    ],
+
+    'attributes' => [
+        'attribute-name' => 'Понятное название',
+
+        'email' => 'Электронная почта',
+        'password' => 'Пароль',
+        'password_confirmation' => 'Подтвердите пароль'
+    ],
 ];
