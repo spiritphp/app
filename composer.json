@@ -9,12 +9,6 @@
             "email": "nurieff@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "/var/www/spiritphp/spirit"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/"
@@ -28,7 +22,7 @@
     },
     "require": {
         "php": ">=7.0.0",
-        "spiritphp/spirit": "dev-master"
+        "spiritphp/spirit": "10.0.*"
     },
     "scripts": {
         "post-root-package-install": [
